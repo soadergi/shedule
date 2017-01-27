@@ -1,0 +1,86 @@
+div{
+  display: block;
+  width: 666px;
+  margin: 100px auto;
+}
+
+h3{
+  color: #949494;
+  font-weight: normal;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+td {
+  border: 1px solid #e3e3e4;
+  width: 20px;
+}
+
+th{
+  font-size: 17px;
+  font-weight: normal;
+  text-align: left;
+  background-color: #fff;
+}
+
+table{
+  border-collapse: collapse;
+  background-color: #f9f9fb;
+  color: #9b9b9b;
+}
+
+table:hover{
+  cursor: pointer;
+}
+
+thead>tr+tr>th:not(:nth-child(1)):not(:nth-child(2)){
+  height: 10px;
+  border-left: 1px solid #949494;
+}
+
+thead>tr>th:nth-child(2){
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+tr td:nth-child(1), tr td:nth-child(2){
+  width: 50px;
+  height: 50px;
+  text-align: center;
+}
+
+tr td:nth-child(2){
+  background-color: #949494;
+}
+
+button{
+  font-size: 18px;
+  float: right;
+  height: 40px;
+  padding: 0px 40px;
+  border-radius: 6px;
+  margin: 20px 0px 0px 40px;
+  color: #f6f6f6;
+  background-color: #b4b4b4;
+  outline: none;
+}
+
+button.active{
+  background-color: #949494;
+}
+
+.active{
+  background-color: #dbdbdb;
+}
+
+td.all.selected{
+  background-image: url("selected.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px 40px;
+}
+
+.busy{
+  background-color: #dbdbdb;
+}
