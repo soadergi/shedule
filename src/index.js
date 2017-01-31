@@ -43,9 +43,6 @@ function changeStore(state = initialState, action) {
 
 const store = createStore(changeStore);
 
-store.subscribe(() => {
-	console.log(store.getState());
-})
 
 ReactDOM.render(
 	<Provider store={store}>

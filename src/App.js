@@ -3,14 +3,8 @@ import { connect } from 'react-redux';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.clear = this.clear.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-  }
 
-  clear() {
+  clear = () => {
     let allDay = document.getElementsByClassName('all');
     allDay.forEach = [].forEach;
     allDay.forEach((item, i, arr) => {
@@ -19,7 +13,7 @@ class App extends Component {
     this.props.onClear();
   }
 
-  handleClick(e) {
+  handleClick = (e) => {
     if (e.target.innerHTML) {
   		return;
   	}
@@ -43,7 +37,7 @@ class App extends Component {
     }
   }
 
-  handleMouseDown(e) {
+  handleMouseDown = (e) => {
     var self = this;
     function selectOnMove (e) {
       if (!e.target.classList.contains('active')) {
