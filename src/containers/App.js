@@ -38,6 +38,7 @@ class App extends Component {
   }
 
   handleMouseDown = (e) => {
+    e.preventDefault();
     var self = this;
     function selectOnMove (e) {
       if (!e.target.classList.contains('active')) {
@@ -96,7 +97,7 @@ class App extends Component {
           </tr>
         </thead>
         <tbody onClick={this.handleClick} onMouseDown={this.handleMouseDown} ref={(tbody) => {this.tbody = tbody}}>
-          {this.props.appStore.map((hours, day) => {
+          {this.props.sheduleStore.map((hours, day) => {
             return (
               <tr key={''+day} data-index={day}>
                 <td className={(hours.some((hour) => {return !!hour}))?' active':''}>{days[day]}</td><td className='all'></td>
@@ -115,7 +116,7 @@ class App extends Component {
 
 export default connect(
   state => ({
-    appStore: state
+    sheduleStore: state
   }),
   dispatch => ({
     onClear: () => {

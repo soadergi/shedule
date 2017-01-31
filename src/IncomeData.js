@@ -9,7 +9,7 @@ var IncomeData =
   "su": []
 }
 
-var initialState = [[],[],[],[],[],[],[]];
+const initialState = [[],[],[],[],[],[],[]];
 
 var IncomeDataParser = function () {
   let weekDays = ['mo','tu','we','th','fr','sa','su'];
