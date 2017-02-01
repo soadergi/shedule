@@ -1,0 +1,5 @@
+export const UNSELECT_ALL_DAY = 'UNSELECT_ALL_DAY'
+export const SELECT_ALL_DAY = 'SELECT_ALL_DAY'
+export const UNSELECT_HOUR = 'UNSELECT_HOUR'
+export const SELECT_HOUR = 'SELECT_HOUR'
+export const UNSELECT_ALL = 'UNSELECT_ALL' 

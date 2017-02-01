@@ -15,31 +15,32 @@ class TableBody extends Component {
   		return;
   	}
 
+    let clickedDayArr = e.target.parentNode.getAttribute('data-index');
+    let clickedHour = parseInt(e.target.getAttribute('class'));
+
     if (e.target.classList.contains('all')) {
-  		if (e.target.classList.contains('selected')) {
+  		if (this.props.tableState[1][clickedDayArr][1]) {
   			this.props.onUnselectAllDay(e);
   		} else {
   			this.props.onSelectAllDay(e);
   		}
-  		e.target.classList.toggle('selected');
   		return;
   	}
 
-    let isSelected = e.target.classList.contains('active');
-    if (isSelected) {
-      e.target.parentNode.getElementsByClassName('all')[0].classList.remove('selected');
+    if (this.props.tableState[0][clickedDayArr][clickedHour]) {
       this.props.onUnselectHour(e);
     } else {
-      this.props.onSelectHour(e);
-    }
+        this.props.onSelectHour(e);
+      }
   }
 
   handleMouseDown = (e) => {
     e.preventDefault();
-    //var self = this;
-    //function
+
     const selectOnMove = (e) => {
-      if (!e.target.classList.contains('active')) {
+      let clickedDayArr = e.target.parentNode.getAttribute('data-index');
+      let clickedHour = parseInt(e.target.getAttribute('class'));
+      if (!this.props.tableState[0][clickedDayArr][clickedHour]) {
         this.props.onSelectHour(e);
       } else {
         return
@@ -54,6 +55,7 @@ class TableBody extends Component {
   }
   render() {
     let days = ['MO','TU','WE','TH','FR','SA','SU'];
+
     function renderHours(hours) {
       let hoursRow = [];
       for (let i=0; i<24; i++) {
@@ -63,16 +65,30 @@ class TableBody extends Component {
       }
       return hoursRow;
     }
+
     return (
-      <tbody onClick={this.handleClick} onMouseDown={this.handleMouseDown} ref={(tbody) => {this.tbody = tbody}}>
-        {this.props.hoursData.map((hours, day) => {
-          return (
-            <tr key={''+day} data-index={day}>
-              <td className={(hours.some((hour) => {return !!hour}))?' active':''}>{days[day]}</td><td className='all'></td>
-              {renderHours(hours)}
-            </tr>
-          )
-        })}
+      <tbody
+        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
+        ref={(tbody) => {this.tbody = tbody}}>
+          {this.props.tableState[0].map((hours, day) => {
+            return (
+              <tr key={''+day} data-index={day}>
+                <td
+                  className={
+                    this.props.tableState[1][day][0]?' active':''
+                  }>
+                  {days[day]}
+                </td>
+                <td
+                  className={
+                    (this.props.tableState[1][day][1])?'all selected':'all'
+                  }>
+                </td>
+                {renderHours(hours)}
+              </tr>
+            )
+          })}
       </tbody>
     )
   }
