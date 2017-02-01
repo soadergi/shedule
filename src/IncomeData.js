@@ -9,12 +9,13 @@ var IncomeData =
   "su": []
 }
 
-const initialState = [[],[],[],[],[],[],[]];
+const initialState = [ [[],[],[],[],[],[],[]], [[],[],[],[],[],[],[]] ];
 
-var IncomeDataParser = () => {
+const IncomeDataParser = (data) => {
   let weekDays = ['mo','tu','we','th','fr','sa','su'];
-  for (let day in IncomeData) {
-    IncomeData[day].forEach((item, i, arr)=>{
+
+  for (let day in data) {
+    data[day].forEach((item, i, arr)=>{
       for (let key in item){
         var bt;
         var interval;
@@ -24,15 +25,27 @@ var IncomeDataParser = () => {
         } else {
           interval = keyValueInHours - bt;
           for (let i = 0; i<interval; i++) {
-            initialState[weekDays.indexOf(day)][bt] = 1;
+            initialState[0][weekDays.indexOf(day)][bt] = 1;
             bt++;
           }
         }
       }
     })
   }
+  initialState[0].forEach((hoursRow, day) => {
+    if (hoursRow.some((hour) => {
+      return !!hour
+    })) {
+      initialState[1][day][0] = 1;
+    }
+    if (hoursRow.length >= 24 && hoursRow.every((hour) => {
+      return !!hour
+    })) {
+      initialState[1][day][1] = 1;
+    }
+  })
 };
 
-IncomeDataParser();
+IncomeDataParser(IncomeData);
 
 export default initialState;

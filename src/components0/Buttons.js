@@ -2,10 +2,10 @@ import React from 'react'
 
 function Buttons(props) {
   return(
-    <span>
+    <div>
       <button>Save Changes</button>
       <button onClick={props.onClear}>Clear</button>
-    </span>
+    </div>
   )
 }
 

@@ -16,7 +16,7 @@ class App extends Component {
         <table>
           <TableHead />
           <TableBody
-            hoursData={this.props.sheduleStore}
+            tableState={this.props.sheduleStore}
             onSelectHour={onSelectHour}
             onUnselectHour={onUnselectHour}
             onSelectAllDay={onSelectAllDay}
