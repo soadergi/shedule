@@ -11,7 +11,7 @@ var IncomeData =
 
 const initialState = [[],[],[],[],[],[],[]];
 
-var IncomeDataParser = function () {
+var IncomeDataParser = () => {
   let weekDays = ['mo','tu','we','th','fr','sa','su'];
   for (let day in IncomeData) {
     IncomeData[day].forEach((item, i, arr)=>{
