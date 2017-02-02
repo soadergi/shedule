@@ -23,7 +23,10 @@ class App extends Component {
             onUnselectAllDay={onUnselectAllDay}
           />
         </table>
-        <Buttons onClear={onClear}/>
+        <Buttons
+          onClear={onClear}
+          toCheckIfSelected={this.props.sheduleStore[1]}
+        />
       </div>
     );
   }

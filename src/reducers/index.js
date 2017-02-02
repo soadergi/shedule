@@ -1,69 +1,76 @@
 import initialState from '../IncomeData';
 import { UNSELECT_ALL_DAY, SELECT_ALL_DAY, UNSELECT_HOUR, SELECT_HOUR, UNSELECT_ALL} from '../constants/index'
-
-function calculateBusyDayRow(state) {
-	state[0].forEach((hoursRow, day) => {
-
-		if (hoursRow.some( hour => {
-			return !!hour
-		})) {
-			state[1][day][0] = 1;
-		} else {
-			state[1][day][0] = 0;
-		}
-
-		let IsAllDaySelected = true;
-
-		for (let i = 0; i<24; i++) {
-			if (hoursRow[i] == 0 || hoursRow[i] == undefined) {
-				IsAllDaySelected = false
-			}
-		}
-
-		if (IsAllDaySelected) {
-			state[1][day][1] = 1;
-		} else {
-			state[1][day][1] = 0;
-		}
-	})
-	return state;
-}
+import { calculateDependentSelections } from '../helpers/helperFunctions'
 
 export default function changeStore(state = initialState, action) {
-	switch (action.type) {
+	var newHoursState, dependentSelections;
 
+	switch (action.type) {
 		case UNSELECT_ALL_DAY:
-			state[0][action.payload[0]] = [];
-			state[1][action.payload[0]] = [];
+			newHoursState = [
+				...state[0].slice(0, action.payload[0]),
+				[],
+				...state[0].slice(action.payload[0]+1)
+			];
+			dependentSelections = calculateDependentSelections(newHoursState, state[1]);
 			return [
-				...state
-			]
+				newHoursState,
+				dependentSelections
+			];
 
 		case SELECT_ALL_DAY:
-			state[0][action.payload[0]] = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,];
-			state[1][action.payload[0]] = [1,1];
+			newHoursState = [
+				...state[0].slice(0, action.payload[0]),
+				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+				...state[0].slice(action.payload[0]+1)
+			];
+			dependentSelections = calculateDependentSelections(newHoursState, state[1]);
 			return [
-				...state
-			]
+				newHoursState,
+				dependentSelections
+			];
 
 		case UNSELECT_HOUR:
-			state[0][action.payload[0]][action.payload[1]] = 0;
-			state = calculateBusyDayRow(state);
-			return [
-				...state
-			]
+			newHoursState = [
+				...state[0].slice(0, action.payload[0]),
+				[
+					...state[0][action.payload[0]].slice(0, action.payload[1]),
+					0,
+					...state[0][action.payload[0]].slice(action.payload[1]+1)
+				],
+					...state[0].slice(action.payload[0]+1)
+				];
+				dependentSelections = calculateDependentSelections(newHoursState, state[1]);
+				return [
+					newHoursState,
+					dependentSelections
+				];
 
 		case SELECT_HOUR:
-			state[0][action.payload[0]][action.payload[1]] = 1;
-			state = calculateBusyDayRow(state);
+			newHoursState = [
+				...state[0].slice(0, action.payload[0]),
+				[
+					...state[0][action.payload[0]].slice(0, action.payload[1]),
+					1,
+					...state[0][action.payload[0]].slice(action.payload[1]+1)
+				],
+				...state[0].slice(action.payload[0]+1)
+			];
+			dependentSelections = calculateDependentSelections(newHoursState, state[1]);
 			return [
-				...state
-			]
+				newHoursState,
+				dependentSelections
+			];
 
 		case UNSELECT_ALL:
-			state = [ [[],[],[],[],[],[],[]], [[],[],[],[],[],[],[]] ];
+			newHoursState = [[],[],[],[],[],[],[]];
+			dependentSelections = calculateDependentSelections(newHoursState, state[1]);
+			return [
+				newHoursState,
+				dependentSelections
+			];
 
 		default:
-		return state
+			return state
 	}
 }

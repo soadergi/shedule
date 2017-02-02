@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 
 class TableBody extends Component {
   clear = () => {
-    let allDay = document.getElementsByClassName('all');
-    allDay.forEach = [].forEach;
-    allDay.forEach((item, i, arr) => {
-      item.classList.remove('selected');
-    });
     this.props.onClear();
   }
 
@@ -16,7 +11,7 @@ class TableBody extends Component {
   	}
 
     let clickedDayArr = e.target.parentNode.getAttribute('data-index');
-    let clickedHour = parseInt(e.target.getAttribute('class'));
+    let clickedHour = parseInt(e.target.getAttribute('class'), 10);
 
     if (e.target.classList.contains('all')) {
   		if (this.props.tableState[1][clickedDayArr][1]) {
@@ -39,7 +34,7 @@ class TableBody extends Component {
 
     const selectOnMove = (e) => {
       let clickedDayArr = e.target.parentNode.getAttribute('data-index');
-      let clickedHour = parseInt(e.target.getAttribute('class'));
+      let clickedHour = parseInt(e.target.getAttribute('class'), 10);
       if (!this.props.tableState[0][clickedDayArr][clickedHour]) {
         this.props.onSelectHour(e);
       } else {

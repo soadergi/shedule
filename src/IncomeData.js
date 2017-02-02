@@ -1,3 +1,5 @@
+import { calculateDependentSelections, incomeDataParser } from './helpers/helperFunctions'
+
 var IncomeData =
 {
   "mo": [{"bt": 240,"et": 779}],
@@ -9,43 +11,7 @@ var IncomeData =
   "su": []
 }
 
-const initialState = [ [[],[],[],[],[],[],[]], [[],[],[],[],[],[],[]] ];
-
-const IncomeDataParser = (data) => {
-  let weekDays = ['mo','tu','we','th','fr','sa','su'];
-
-  for (let day in data) {
-    data[day].forEach((item, i, arr)=>{
-      for (let key in item){
-        var bt;
-        var interval;
-        var keyValueInHours = (Math.round(item[key]/60));
-        if (key === 'bt') {
-          bt = keyValueInHours
-        } else {
-          interval = keyValueInHours - bt;
-          for (let i = 0; i<interval; i++) {
-            initialState[0][weekDays.indexOf(day)][bt] = 1;
-            bt++;
-          }
-        }
-      }
-    })
-  }
-  initialState[0].forEach((hoursRow, day) => {
-    if (hoursRow.some((hour) => {
-      return !!hour
-    })) {
-      initialState[1][day][0] = 1;
-    }
-    if (hoursRow.length >= 24 && hoursRow.every((hour) => {
-      return !!hour
-    })) {
-      initialState[1][day][1] = 1;
-    }
-  })
-};
-
-IncomeDataParser(IncomeData);
+const initialState = incomeDataParser(IncomeData);
+calculateDependentSelections(initialState[0], initialState[1]);
 
 export default initialState;

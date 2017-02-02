@@ -10,8 +10,8 @@ export function onSelectHour(e) {
   return {
     type: SELECT_HOUR,
     payload: [
-      e.target.parentNode.getAttribute('data-index'),
-      parseInt(e.target.className)
+      parseInt(e.target.parentNode.getAttribute('data-index'), 10),
+      parseInt(e.target.className, 10)
     ]
   }
 }
@@ -20,8 +20,8 @@ export function onUnselectHour(e) {
   return {
     type: UNSELECT_HOUR,
     payload: [
-      e.target.parentNode.getAttribute('data-index'),
-      parseInt(e.target.className)
+      parseInt(e.target.parentNode.getAttribute('data-index'), 10),
+      parseInt(e.target.className, 10)
     ]
   }
 }
@@ -30,7 +30,7 @@ export function onUnselectAllDay(e) {
   return {
     type: UNSELECT_ALL_DAY,
     payload: [
-      e.target.parentNode.getAttribute('data-index')
+      parseInt(e.target.parentNode.getAttribute('data-index'), 10)
     ]
   }
 }
@@ -39,7 +39,7 @@ export function onSelectAllDay(e) {
   return {
     type: SELECT_ALL_DAY,
     payload: [
-      e.target.parentNode.getAttribute('data-index')
+      parseInt(e.target.parentNode.getAttribute('data-index'), 10)
     ]
   }
 }
